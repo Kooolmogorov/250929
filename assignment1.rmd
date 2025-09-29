@@ -1,0 +1,213 @@
+---
+title: "Assignment 1"
+author: "YOUR NAME"
+date: "September 25, 2025 (due October 1 11:59 pm, 2025)"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Note: This is an individual assignment. No discussion with a fellow student is allowed. Honor code is in place.
+
+In Each question you have to write a helper function. The helper function is not graded. Then you answer a series of questions where you make use of the helper function to get answers. The answers to these questions have to be posted on canvas. Your score on the assignment is based on these answers. If the answer is numeric, it must be to 3 decimal places obtained using the round() function. 
+
+NOTE: You also must upload this completed rmd file to canvas. 
+
+Run this chunk before answering the questions.
+
+```{r}
+
+rm(list = ls());
+source("tools.r")
+
+```
+
+## Question 1
+
+a) Write a helper function mysummary() with the argument name x, where x is a numeric vector. The function should calculate the mean, sd, the .025 and .975 quantiles of x. The sd, .025 and .975 quantities should be returned by modifying the attr() of the mean object. 
+
+```{r}
+# complete the function
+# the code is not graded 
+mysummary = function(x = x) {
+  m = mean(x)
+  sd_val = sd(x)
+  quantiles = quantile(x, probs = c(0.025, 0.975))
+  attr(m, "sd") <- sd_val
+  attr(m, "0.025") <- quantiles[1]
+  attr(m, "0.975") <- quantiles[2]
+  return(m) 
+}
+```
+
+For the following input
+
+```{r}
+set.seed(501);
+x = rnorm(n = 101,sd = .01);
+
+```
+
+Answer the following questions and paste your answer to 3 dp's in assg1ques1 on canvas. You only get credit for an exact match.
+
+b) What is the sd of x from calling your mysummary() function? 
+
+```{r}
+
+# write your code here 
+# get your answer
+# use the round() function to get it to 3 decimal places
+# You only get credit for an exact match
+# and copy and paste your answer to assg1ques1
+
+
+result = mysummary(x)
+sd = round(attr(result, "sd"), 3)
+print(sd)
+
+```
+
+
+c) What is the .025 quantile of x from calling your mysummary() function?
+
+```{r}
+
+# write your code here 
+# get your answer
+# use the round() function to get it to 3 decimal places
+# and copy and paste your answer to assg1ques1
+
+round(attr(mysummary(x), "0.025"), 3)
+```
+
+d) What is the .975 quantile of x from calling your mysummary() function?
+
+```{r}
+
+# write your code here 
+# get your answer
+# use the round() function to get it to 3 decimal places
+# and copy and paste your answer to assg1ques1
+
+round(attr(mysummary(x), "0.975"), 3)
+```
+
+
+## Question 2
+
+a) Write a helper function getadjmonthly() with the given argument names and default values. The function should use quantmod::getSymbols() to download the data for a given symbol and then convert the dowloaded data to monthly via xts::to.monthly(indexAt = "last"). The function output are the xts object .Adjusted prices (e.g., via quantmod::Ad()). 
+
+```{r}
+
+# complete the function
+# the code is not graded 
+
+getadjmonthly = function(symbol = "WMT",
+                         from   = "2015-01-01",
+                         to     = "2025-08-30") {
+  stock_data <- quantmod::getSymbols(Symbols = symbol, 
+                                     from = from, 
+                                     to = to)
+  monthly_data <- xts::to.monthly(stock_data, indexAt = "last")
+  adjusted_prices <- quantmod::Ad(monthly_data)
+  return(adjusted_prices)
+}
+```
+
+b) Using your getadjmonthly() function, and without changing the default values of the second and third arguments, download the Adjusted end of month stock price data on TSLA. Call the variable ptsla. What was the value of ptsla on 2019-01-31?
+
+```{r}
+
+# write your code here 
+# get your answer
+# use the round() function to get it to 3 decimal places
+# You only get credit for an exact match
+# and copy and paste your answer to assg1ques2
+
+ptsla <- getadjmonthly(symbol = "TSLA")
+round(as.numeric(ptsla["2019-01-31"]), 3)
+
+```
+
+
+c) Using your getadjmonthly() function, and without changing the default values of the second and third arguments, download the Adjusted end of month stock price data on WMT. Call the variable pwmt. What was the value of pwmt on 2019-06-28?  
+
+```{r}
+# write your code here 
+# get your answer
+# use the round() function to get it to 3 decimal places
+# You only get credit for an exact match
+# and copy and paste your answer to assg1ques2
+
+
+```
+
+
+d) Using your downloaded ptsla data, calculate the month-by-month discrete returns in decimals on TSLA stock. Call this variable rtsla. What was the value of rtsla in January of 2019? 
+
+```{r}
+# write your code here 
+# get your answer
+# use the round() function to get it to 3 decimal places
+# You only get credit for an exact match
+# and copy and paste your answer to assg1ques2
+
+
+
+```
+
+e) Using your downloaded pwmt data, calculate the month-by-month discrete returns in decimals on WMT stock. Call this variable rwmt. What was the value of rwmt in June of 2019? 
+
+```{r}
+# write your code here 
+# get your answer
+# use the round() function to get it to 3 decimal places
+# You only get credit for an exact match
+# and copy and paste your answer to assg1ques2
+
+
+```
+
+## Question 3
+
+a) Write a helper function calcSR() which takes an xts vector rxts of monthly and returns the annualized Sharpe Ratio (SR) of those returns. The monthly SR, call it srmonthly, is calculated by as the ratio of the monthly means divided by the monthly sd. The annualized SR, call it s2annual is sqrt(12)*srmonthly. 
+
+```{r}
+
+# complete the function
+# the code is not graded 
+
+calcSR = function(rxts = rxts) {
+    
+    
+    
+    
+    
+}
+```
+
+b) Use your function calcSR() to find the annualized SR of TSLA monthly returns given in rtsla. Make sure that there are no NA's in rtsla. 
+
+```{r}
+# write your code here 
+# get your answer
+# use the round() function to get it to 3 decimal places
+# You only get credit for an exact match
+# and copy and paste your answer to assg1ques3
+
+
+```
+
+c) Use your function calcSR() to find the annualized SR of WMT monthly returns given in rwmt. Make sure that there are no NA's in rwmt. 
+
+```{r}
+# write your code here 
+# get your answer
+# use the round() function to get it to 3 decimal places
+# You only get credit for an exact match
+# and copy and paste your answer to assg1ques3
+
+
+```
